@@ -10,23 +10,7 @@ game_board = [
   [0, 0, 0, 3, 1, 9, 0, 0, 5]
 ]
 
-def validCell(row, col, board):
-  cell_value = board[row][col]
-  is_valid = True
-
-  # Check if the row is valid
-  for i in range(9):
-    if i != col:
-      if board[row][i] == cell_value:
-        is_valid = False
-
-  # Check if the column is valid
-  for i in range(9):
-    if i != row:
-      if board[i][col] == cell_value:
-        is_valid = False
-
-  # Check if the subgrid is valid
+def getSubgrid(row, col):
   sub_grid_no = 0
 
   if row < 3:
@@ -53,12 +37,41 @@ def validCell(row, col, board):
     else:
       sub_grid_no = 9
 
+  return sub_grid_no
+
+def validCell(row, col, board):
+  cell_value = board[row][col]
+  is_valid = True
+
+  # Check if the row is valid
+  for i in range(9):
+    if i != col:
+      if board[row][i] == cell_value:
+        is_valid = False
+
+  # Check if the column is valid
+  for i in range(9):
+    if i != row:
+      if board[i][col] == cell_value:
+        is_valid = False
+
+  # Check if the subgrid is valid
+  sub_grid_no = getSubgrid(row, col)
+
+  if sub_grid_no == 1:
+    for i in range(3):
+      for k in range(3):
+        if i != row and col != k:
+          if board[i][k] == cell_value:
+            is_valid = False
+
   # Return if the cell is valid
   return is_valid
 
 def solveBoard(row, col, board):
   if(len(board[row]) == col):
     row = row + 1
+    col = 0
 
   if(board[row][col] != 0):
     col = col + 1  
@@ -66,6 +79,9 @@ def solveBoard(row, col, board):
   for i in range(1, 10):
     board[row][col] = i
     if(validCell(row, col, board)):
+      print("\n")
+      for row in board:
+        print(row)
       solveBoard(row, col + 1, board)
 
   board[row][col] = 0
@@ -82,6 +98,8 @@ def startGame(board):
 
   for row in board:
     print(row)
+
+  solveBoard(0, 0, game_board)
   
 def main():
   startGame(game_board)
