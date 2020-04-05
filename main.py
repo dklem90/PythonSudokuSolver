@@ -1,6 +1,3 @@
-# import sys
-# sys.setrecursionlimit(3000)
-
 game_board = [
   [2, 7, 3, 1, 0, 0, 0, 5, 0],
   [5, 0, 0, 0, 0, 9, 3, 0, 1],
