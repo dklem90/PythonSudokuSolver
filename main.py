@@ -133,10 +133,6 @@ def solveBoard(board):
   else:
     row, col = found
 
-  # # Check that the cell is empty
-  # if checkThatCellIsEmpty(row, col) == False:
-  #   solveBoard(board)
-
   # Assign a value to the specified cell and validate it
   for i in range(1, 10):
     if validCell(row, col, board, i):   
